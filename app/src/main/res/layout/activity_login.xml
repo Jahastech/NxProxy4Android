@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackgroundPrimary"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/edtPasswd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter your login token!"
+        android:inputType="textPassword|textCapCharacters"
+        android:singleLine="true"
+        android:padding="16dp"
+        android:layout_marginTop="100dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="LOGIN"
+            android:textSize="16sp"
+            android:padding="8dp" />
+
+        <Button
+            android:id="@+id/btnRestart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="RESTART"
+            android:textSize="16sp"
+            android:padding="8dp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/errorTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FF0000"
+        android:text=""
+        android:singleLine="true"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="center_horizontal" />
+
+</LinearLayout>

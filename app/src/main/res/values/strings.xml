@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name" translatable="false">NxProxy</string>
+    <string name="notification_title">NxProxy</string>
+    <string name="notification_running">Malware shield is on</string>
+    <string name="could_not_configure_vpn_service">Could not configure VPN service - Check if you use another VPN service</string>
+    <string name="notifications_running">Running service</string>
+    <string name="notifications_running_desc">Notifications to interact with running service</string>
+</resources>
