@@ -1,11 +1,16 @@
 *****************************************************************
-NxProxy for Android v0.9.8
+NxProxy for Android v1.0.1
   Author : Jahastech
   Homepage : http://www.nxfilter.org
   Contact : support@nxfilter.org
 *****************************************************************
 
 NxProxy is a property of Jahastech.
+
+
+2023-06-09, v1.0.1
+- Use HTTP protocol for sending policy queries.
+- Use ParamEncoder for sending query string to server.
 
 
 2023-05-30, v0.9.8

@@ -11,6 +11,7 @@ package com.jahastech.nxproxy;
 
 import com.jahastech.nxproxy.lib.Lib;
 import com.jahastech.nxproxy.lib.NxLog;
+import com.jahastech.nxproxy.lib.ParamEncoder;
 
 //-----------------------------------------------
 public class NxTalkie {
@@ -28,9 +29,12 @@ public class NxTalkie {
     private final int MAX_CONN_ERR_CNT = 3;
     private int connErrCnt = 0;
 
+    private ParamEncoder paramEncoder = null;
+
     //-----------------------------------------------
     private NxTalkie() {
         cfg = Config.getInstance();
+        paramEncoder = new ParamEncoder();
     }
 
     //-----------------------------------------------
@@ -47,6 +51,7 @@ public class NxTalkie {
             return "";
         }
 
+        /*
         if(cfg.isSendUname()){
             return String.format("%s?domain=%s&token=%s&uname=%s",
                     cfg.getServerUrl(), domain, cfg.getToken(), cfg.getUname());
@@ -54,6 +59,10 @@ public class NxTalkie {
 
         return String.format("%s?domain=%s&token=%s&uname=%s",
                 cfg.getServerUrl(), domain, cfg.getToken(), cfg.getUname());
+         */
+
+        String dtu = String.format("%s|%s|%s", domain, cfg.getToken(), cfg.getUname());
+        return String.format("%s?dtu=%s", cfg.getServerUrl(), paramEncoder.encode(dtu));
     }
 
     //-----------------------------------------------

@@ -97,9 +97,11 @@ public class NxPing extends Thread {
         Config cfg = Config.getInstance();
 
         // Try to find username.
+        /*
         cfg.setUname(LibCtx.findUsername(ctx));
 
         NxLog.info("LibCtx.findUsername(ctx) = " + LibCtx.findUsername(ctx));
+         */
 
         // Send start signal.
         nxTalkie.sendSignalStart();
@@ -123,9 +125,11 @@ public class NxPing extends Thread {
                     startVpnFlag = false;
                 }
 
+                /*
                 if (Lib.isEmpty(cfg.getUname())) {
                     cfg.setUname(LibCtx.findUsername(ctx));
                 }
+                 */
             }
 
             nxTalkie.sendSignalPing();

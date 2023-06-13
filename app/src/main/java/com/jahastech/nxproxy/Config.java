@@ -21,7 +21,7 @@ public class Config {
     private String server = "";
     private String token = "";
     private String uname = "";
-    private boolean sendUname = true;  // Always true since versionCode 984.
+    private boolean sendUname = true; // Always true since versionCode 984.
 
     private boolean loginAlreadyFlag = false;
     private boolean passwdProtection = false;
@@ -70,8 +70,9 @@ public class Config {
         if (preferences != null) {
             server = preferences.getString("server", "").trim();
             token = preferences.getString("token", "").trim();
-            //sendUname = preferences.getBoolean("sendUname", false);
+            sendUname = preferences.getBoolean("sendUname", false);
             passwdProtection = preferences.getBoolean("passwdProtection", false);
+            uname = preferences.getString("uname", "").trim();
         }
     }
 
@@ -86,8 +87,13 @@ public class Config {
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("server", server);
         editor.putString("token", token);
-        //editor.putBoolean("sendUname", sendUname);
+        editor.putBoolean("sendUname", sendUname);
         editor.putBoolean("passwdProtection", passwdProtection);
+
+        if(Lib.isNotEmpty(uname)) {
+            editor.putString("uname", uname);
+        }
+
         editor.apply();
     }
 
@@ -103,7 +109,7 @@ public class Config {
 
     //-----------------------------------------------
     public synchronized String getServerUrl() {
-        return "https://" + server + "/hxlistener";
+        return "http://" + server + "/hxlistener";
     }
 
     //-----------------------------------------------

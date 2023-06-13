@@ -10,6 +10,7 @@
 package com.jahastech.nxproxy;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.VpnService;
@@ -20,6 +21,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
@@ -39,12 +41,13 @@ public class MainActivity extends AppCompatActivity {
     private EditText edtServer;
     private EditText edtToken;
     private Button btnSave, btnTest, btnStart;
-    private CheckBox chkSendUname, chkPasswdProtection;
+    private CheckBox chkSendxUname, chkPasswdProtection;
 
     public final int REQUEST_START_VPN = 1;
 
     private final int PERMISSION_ALL = 13027;
     private String[] PERMISSIONS = {Manifest.permission.READ_CONTACTS};
+    private boolean userConsentFlag = false;
 
     //-----------------------------------------------
     public boolean hasPermission() {
@@ -94,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
         cfg.setToken(token);
         //cfg.setSendUname(sendUname);
         cfg.setPasswdProtection(passwdProtection);
+        cfg.setUname(LibCtx.findUsername(this));
         cfg.savePreferences();
         cfg.readPreferences();
 
@@ -190,6 +194,34 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //-----------------------------------------------
+    private void showConsentPopup() {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        dialogBuilder.setTitle("User Consent");
+        dialogBuilder.setMessage("NxProxy needs to retrieve the username from your primary account or Google email address." +
+                " The username will be used by your DNS filtering server that is NxFilter to apply the right filtering policy" +
+                " for the user or to show you the user level report with it. This data sharing is only between your server and" +
+                " NxProxy. We don't send any of your private information to any other party and we don't keep your private information" +
+                " anywhere else. If you want to proceed, click YES.");
+
+        dialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                userConsentFlag = true;
+            }
+        });
+
+        dialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+
+        dialogBuilder.setCancelable(false);
+        dialogBuilder.create().show();
+    }
+
+    //-----------------------------------------------
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -200,6 +232,10 @@ public class MainActivity extends AppCompatActivity {
             if (!hasPermission()) {
                 ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
             }
+        }
+
+        if (!userConsentFlag && !Config.getInstance().isValid()) {
+            showConsentPopup();
         }
 
         // Init app.
